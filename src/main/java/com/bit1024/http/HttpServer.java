@@ -28,9 +28,13 @@ public class HttpServer {
                 .childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
+                        //设置http解码器
                         ch.pipeline().addLast(new HttpRequestDecoder());
+                        //设置http内容处理器
                         ch.pipeline().addLast(new HttpObjectAggregator(65536));
+                        //设置http编码器
                         ch.pipeline().addLast(new HttpResponseEncoder());
+                        //自定义服务处理器
                         ch.pipeline().addLast(new HttpServerHandler());
                     }
                 });
