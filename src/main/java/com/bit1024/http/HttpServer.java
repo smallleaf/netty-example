@@ -35,7 +35,7 @@ public class HttpServer {
                         //设置http编码器
                         ch.pipeline().addLast(new HttpResponseEncoder());
                         //自定义服务处理器
-                        ch.pipeline().addLast(new HttpServerHandler());
+                        ch.pipeline().addLast(new WebsocketServerHandler());
                     }
                 });
 
