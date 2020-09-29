@@ -30,8 +30,13 @@ public class WebsocketServerHandler extends ChannelInboundHandlerAdapter {
     }
 
     private void handleHttpRequest(ChannelHandlerContext ctx,FullHttpRequest req){
-        if(!req.decoderResult().isSuccess() || (!"websocket".equals(req.headers().get("Upgrade")))){
-            sendHttpResponse(ctx,req,new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,HttpResponseStatus.BAD_REQUEST));
+        if(!req.decoderResult().isSuccess()){
+            sendHttpResponse(ctx,req,new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,HttpResponseStatus.OK));
+            return;
+        }
+        if(!"websocket".equals(req.headers().get("Upgrade"))){
+            sendHttpResponse(ctx,req,new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,HttpResponseStatus.OK));
+            return;
         }
         WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory("ws://localhost:8080/websocket",null,false);
         handshaker = wsFactory.newHandshaker(req);

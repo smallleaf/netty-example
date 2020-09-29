@@ -40,7 +40,7 @@ public class HttpServer {
                 });
 
         try {
-            ChannelFuture future = bootstrap.bind(8080).sync();
+            ChannelFuture future = bootstrap.bind(8088).sync();
             System.out.println("服务器启动成功");
             future.channel().closeFuture().sync();
         }catch (Exception e){
